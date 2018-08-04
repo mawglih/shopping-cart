@@ -1,21 +1,50 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import axios from 'axios';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import Products from 'components/Products';
+import ProductItem from 'components/Product-item';
+import Cart from 'components/Cart';
 import './App.css';
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      products: [],
+    }
+  }
+
+  componentDidMount() {
+    console.log("apps props: ", this.props);
+    axios.get('http://localhost:3001/get-items')
+    .then(response => {
+      this.setState({
+        products: response.data
+      }, () => console.log(this.state.products))
+    });
+  }
   render() {
-    return (
+    const {
+      products,
+    } = this.state;
+    const selectedProduct = (id) => {
+      products.filter(el => {
+        return el.id === id;
+      });
+    }
+    return(
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact render={() => <Products products={products} />} />
+          <Route path="/cart" component={Cart} />
+          <Route path="/:id" exact render={() => <ProductItem product={selectedProduct} />} />
+        </Switch>
+      </BrowserRouter>
+        
       </div>
-    );
+    )
   }
 }
-
+    
 export default App;
