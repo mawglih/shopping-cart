@@ -1,34 +1,105 @@
-import React, { Fragment } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Layout from 'components/Layout';
+import { 
+  fetchProducts,
+  addProductToCart,
+  searchProductTag,
+ } from 'actions';
+import { getProducts } from 'selectors';
 
-const ProductItem = ({
-  product,
-  handleClick,
-}) => (
-  <Fragment>
-    <h1>{product.title}</h1>
-    {/* <img src={product.images[0]} alt="" />
-    <img src={product.images[1]} alt="" />
-    <img src={product.images[2]} alt="" /> */}
-    <p>$ {product.price}</p>
-    <div
-      className={product.inStock ? "greenText" : "redText"} 
-    >
-      {product.inStock ? "In Stock" : "Out of Stock"}
-    </div>
-    <p>{product.description}</p>
-    <div>
-      {product.reviews ? product.reviews.map((item, i) => {
-        return <div>
-                  <h3>{item.title}</h3>
-                  <h4>{item.author}</h4>
-                  <p>{item.body}</p>
-                  <p>{item.rating}</p>
+class ProductItem extends Component {
+  componentDidMount() {
+    this.props.fetchProducts();
+    // console.log('params id: ', this.props.match.params.id);
+    // console.log('products in item: ', this.props.products);
+  }
+  render() {
+    const {
+      match,
+      products,
+      addProductToCart,
+      searchProductTag,
+    } = this.props;
+
+    const product = products.find(el => {
+      return el.id === match.params.id;
+    });
+    
+    return(
+      <div>
+        <Layout >   
+          <div className="productItem">
+            <h1>{product.title}</h1>
+            <div className="imageTags">
+              <div className="productImages">
+                <img src={product.images[0]} alt="" />
+                <img src={product.images[1]} alt="" />
+                <img src={product.images[2]} alt="" /> 
+              </div>
+              <div>
+                <h3>Tags</h3>
+                <div className="tags">
+                  {product.tags.map((el, i) => {
+                    
+                    return <button onClick={searchProductTag} name={el} key={i}>{el}</button>
+                  })}
                 </div>
-      }) : null}
-    </div>
-    <button onClick={handleClick} disabled={!product.inStock}>Add to cart</button>
-  </Fragment>
-);
+                
+              </div>
+            </div>
+            
+            <p>$ {product.price}</p>
+            <div
+              className={product.inStock ? "greenText" : "redText"} 
+            >
+              {product.inStock ? "In Stock" : "Out of Stock"}
+            </div>
+            <p>{product.description}</p>
+            <div className="reviews">
+              {product.reviews ? product.reviews.map((item, i) => {
+                return <div key={i}>
+                          <h3>{item.title}</h3>
+                          <h4>By: {item.author}</h4>
+                          <p>{item.body}</p>
+                          <p>
+                            <span>Rating: </span>
+                            <span
+                              className={item.rating > 3 ? "greenText" : "redText"}
+                            >
+                              {item.rating}
+                            </span>
+                          </p>
+                        </div>
+              }) : null}
+            </div>
+            <button
+              onClick={() => addProductToCart(product.id)}
+              disabled={!product.inStock}
+              className="button"
+            >
+              Add to cart
+            </button>
+          </div> 
+          Products
+        </Layout>
+      </div>
+    );
+  }
+}
 
-export default withRouter(ProductItem);
+const mapStateToProps = (state) => {
+  console.log("map in product item", state);
+return{
+  products: getProducts(state),
+};
+};
+
+const mapDispatchToProps = {
+  fetchProducts,
+  addProductToCart,
+  searchProductTag,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductItem);
+

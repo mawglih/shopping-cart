@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import '../../App.css';
+import React  from 'react';
+import { Link } from 'react-router-dom';
 
 const ProductListItem = ({
   id,
@@ -10,8 +10,8 @@ const ProductListItem = ({
   price,
   handleClick,
 }) => (
-  <Fragment>
-    <h3>{title}</h3>
+  <div className="productListItem">
+    <Link to={`/product/${id}`}><h3>{title}</h3></Link>
     <img src={thumbnail} alt={title} />
     <p>
       $ {price}
@@ -20,8 +20,8 @@ const ProductListItem = ({
       In stock
       <div className={`circle ${color}`}></div>
     </div>
-    <button disabled={!enabled} onClick={handleClick}>Add to cart</button>
-  </Fragment>
+    <button className="button" disabled={!enabled} onClick={handleClick}>Add to cart</button>
+  </div>
 );
 
 export default ProductListItem;
