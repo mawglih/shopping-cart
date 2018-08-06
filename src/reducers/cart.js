@@ -10,15 +10,14 @@ import * as R from 'ramda';
 const INITIAL_STATE = [];
 
 export default (state = INITIAL_STATE, {type, payload}) => {
-  console.log("cart reducer state: ", state);
   switch (type) {
     case ADD_PRODUCT_TO_CART:
       return R.append(payload, state);
     case REMOVE_PRODUCT_FROM_CART:
       return R.without(R.of(payload), state);
     case REMOVE_ONE_ITEM_FROM_CART:
-      console.log("payload in cart r: ", payload);
-      return R.without(payload, state);
+      (state.splice(state.indexOf(payload),1));
+      return state;
     case SUBMIT_ORDER_TO_SERVER:
       return (payload, state);
     case CART_EMPTY:

@@ -42,7 +42,6 @@ export const addProductToCart = id => dispatch => {
     type: ADD_PRODUCT_TO_CART,
     payload: id,
   });
-  console.log("actions add item from cart id:", id);
 };
 
 export const searchProductTag = (e) => dispatch => {
@@ -60,7 +59,6 @@ export const fetchCategories = () => async dispatch => {
       type: FETCH_CATEGORIES_SUCCESS,
       payload: categories,
     });
-    console.log("fetch cat: ", categories);
   } catch(err) {
     dispatch({
       type: FETCH_CATEGORIES_FAILURE,
@@ -82,14 +80,11 @@ export const removeOneItemFromCart = id => async  dispatch => {
     type: REMOVE_ONE_ITEM_FROM_CART,
     payload: id,
   });
-  console.log("actions remove one item from cart id:", id);
 };
 
 
 export const submitOrderToServer = val => async dispatch => {
-  console.log("actions submit order to server:", val);
   const itemsJson =(JSON.stringify({items:val}));
-  console.log("json before submit: ", itemsJson);
   const submitted = sendProductToServerApi({itemsJson});
   dispatch({
     type: SUBMIT_ORDER_TO_SERVER,
@@ -110,7 +105,6 @@ export const cartEmpty = () => dispatch => {
 };
 
 export const orderSubmited = submitted => dispatch => {
-  console.log("status is: ", submitted);
   dispatch({
     type: ORDER_SUBMITED,
   });

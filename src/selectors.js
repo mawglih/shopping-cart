@@ -40,20 +40,8 @@ export const getProductsByTag = state => {
   const items = R.map(rec => R.pick(
     ['id', 'quantity'], rec
   ), products);
-  console.log("items in cart: ", items);
   return items;
 };
-
-// const getCart = state => state.Cart;
-
-// export const removeOne = id => {
-//   const cart = getCart();
-//   if(id === R.find(id, cart)) {
-//     cart.pop(id);
-//   }
-//   console.log("cart after pop: ", cart);
-//   return cart;
-// }
 
 export const getCategories = state => R.values(state.Products.tags);
 
