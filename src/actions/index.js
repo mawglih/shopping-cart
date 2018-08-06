@@ -2,9 +2,6 @@ import {
   FETCH_PRODUCTS_START,
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS_FAILURE,
-  LOAD_PRODUCTS_START,
-  LOAD_PRODUCTS_SUCCESS,
-  LOAD_PRODUCTS_FAILURE,
   ADD_PRODUCT_TO_CART,
   SEARCH_PRODUCT_TAG,
   FETCH_CATEGORIES_START,
@@ -13,15 +10,15 @@ import {
   REMOVE_PRODUCT_FROM_CART,
   REMOVE_ONE_ITEM_FROM_CART,
   SUBMIT_ORDER_TO_SERVER,
+  CART_EMPTY,
+  ORDER_SUBMITED,
+  NEW_ORDER,
 } from 'actionTypes';
 import {
   fetchProducts as fetchProductsApi,
-  loadMoreProducts as loadMoreProductsApi,
   fetchCategories as fetchCategoriesApi,
+  sendProductToServer as sendProductToServerApi,
 } from 'api';
-import {
-  getDisplayedProductsLength,
-} from 'selectors';
 
 export const fetchProducts = () => async dispatch => {
   dispatch({ type: FETCH_PRODUCTS_START});
@@ -31,29 +28,9 @@ export const fetchProducts = () => async dispatch => {
       type: FETCH_PRODUCTS_SUCCESS,
       payload: products,
     });
-    console.log("actions:", products);
   } catch(err) {
     dispatch({
       type: FETCH_PRODUCTS_FAILURE,
-      payload: err,
-      error: true,
-    });
-  }
-};
-
-export const loadMoreProducts = () => async (dispatch, getState) => {
-  const offset = getDisplayedProductsLength(getState());
-  dispatch({ type: LOAD_PRODUCTS_START});
-  try {
-    const products = await loadMoreProductsApi({offset});
-    dispatch({
-      type: LOAD_PRODUCTS_SUCCESS,
-      payload: products,
-    });
-    console.log("actions:", products);
-  } catch(err) {
-    dispatch({
-      type: LOAD_PRODUCTS_FAILURE,
       payload: err,
       error: true,
     });
@@ -65,23 +42,7 @@ export const addProductToCart = id => dispatch => {
     type: ADD_PRODUCT_TO_CART,
     payload: id,
   });
-  console.log("actions add to cart:", id);
-};
-
-export const removeOneItemFromCart = id => dispatch => {
-  dispatch({
-    type: REMOVE_ONE_ITEM_FROM_CART,
-    payload: id,
-  });
-  console.log("actions remove cart:", id);
-};
-
-export const addOrderToCart = ( id, product) => {
-  return {
-    type: ADD_PRODUCT_TO_CART,
-    orderId: id,
-    orderData: product,
-  };
+  console.log("actions add item from cart id:", id);
 };
 
 export const searchProductTag = (e) => dispatch => {
@@ -116,10 +77,47 @@ export const removeProductFromCart = id => async dispatch => {
   });
 };
 
-export const submitOrderToServer = products => dispatch => {
+export const removeOneItemFromCart = id => async  dispatch => {
+  dispatch({
+    type: REMOVE_ONE_ITEM_FROM_CART,
+    payload: id,
+  });
+  console.log("actions remove one item from cart id:", id);
+};
+
+
+export const submitOrderToServer = val => async dispatch => {
+  console.log("actions submit order to server:", val);
+  const itemsJson =(JSON.stringify({items:val}));
+  console.log("json before submit: ", itemsJson);
+  const submitted = sendProductToServerApi({itemsJson});
   dispatch({
     type: SUBMIT_ORDER_TO_SERVER,
-    payload: products,
+    payload: submitted,
   });
-  console.log("actions add to cart:", products);
+  dispatch({
+    type: CART_EMPTY,
+  });
+  dispatch({
+    type: ORDER_SUBMITED,
+  });
+};
+
+export const cartEmpty = () => dispatch => {
+  dispatch({
+    type: CART_EMPTY,
+  });
+};
+
+export const orderSubmited = submitted => dispatch => {
+  console.log("status is: ", submitted);
+  dispatch({
+    type: ORDER_SUBMITED,
+  });
+};
+
+export const startNewOrder = () => dispatch => {
+  dispatch({
+    type: NEW_ORDER,
+  });
 };

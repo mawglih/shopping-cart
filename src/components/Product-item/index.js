@@ -89,9 +89,8 @@ class ProductItem extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("map in product item", state);
-return{
-  products: getProducts(state),
+  return{
+    products: getProducts(state),
 };
 };
 

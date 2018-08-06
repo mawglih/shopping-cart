@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { 
   fetchProducts,
   fetchCategories,
-  loadMoreProducts,
   addProductToCart,
 } from 'actions';
 import ProductListItem from '../Product-List-Item';
@@ -18,10 +17,8 @@ class Products extends Component {
   render() {
     const {
       products,
-      loadMoreProducts,
       addProductToCart,
     } = this.props;
-    console.log('products in render', products);
     return(
       <Layout>
         <div className="products">
@@ -39,12 +36,6 @@ class Products extends Component {
               />
             ); 
           })}
-          <button
-            className="loadButton button"
-            onClick={loadMoreProducts}
-          >
-            Load More Products
-          </button>
         </div>
       </Layout>
     );
@@ -52,7 +43,6 @@ class Products extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log("map in products", state);
   return{
     products: getProducts(state),
   };
@@ -61,7 +51,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     fetchProducts,
     fetchCategories,
-    loadMoreProducts,
     addProductToCart,
 };
 

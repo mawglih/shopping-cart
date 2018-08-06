@@ -226,7 +226,16 @@ body {
 .submitOrder {}
 
 .submitBtn {
-    position: absolute;
-    bottom: -20px;
-    right: -100px;
+  position: absolute;
+  top: 20px;
+  right: 100px;
+}
+
+.returnHome {
+  position: absolute;
+  top: 20px;
+  left:100px;
+}
+.cleanBasket {
+  background-color: red;
 }

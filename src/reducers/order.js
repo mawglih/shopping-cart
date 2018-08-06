@@ -1,23 +1,25 @@
-import * as actionTypes from 'actionTypes';
+import {
+  ORDER_SUBMITED,
+  NEW_ORDER,
+} from 'actionTypes';
 
 const INITIAL_STATE = {
-  orders: []
+  submitted: false,
 }
 
-const order = ( state = INITIAL_STATE, action) => {
-  switch (action.type) {
-    case actionTypes.ADD_ORDER_TO_CART:
-      const newOrder = {
-        ...action.orderData,
-        id: action.orderId,
-      }
+export default (state = INITIAL_STATE, {type, payload}) => {
+  switch (type) {
+    case ORDER_SUBMITED:
       return {
         ...state,
-        orders: state.orders.concat(newOrder)
+        submitted: true,
+      };
+    case NEW_ORDER:
+      return {
+        ...state,
+        submitted: false,
       };
     default:
       return state;
   }
 }
-
-export default order;

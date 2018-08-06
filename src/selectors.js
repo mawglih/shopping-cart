@@ -20,6 +20,7 @@ export const getTotalCartPrice = state => {
   return totalPrice;
 }
 
+export const getOrderStatus = state => state.Order.submitted;
 
 export const getProductsByTag = state => {
   const applySearch = item => R.contains(
@@ -34,6 +35,26 @@ export const getProductsByTag = state => {
   return products;
 }
 
+ export const getProductsToCheckout = state => {
+  const products = getCartProductsWithCount(state);
+  const items = R.map(rec => R.pick(
+    ['id', 'quantity'], rec
+  ), products);
+  console.log("items in cart: ", items);
+  return items;
+};
+
+// const getCart = state => state.Cart;
+
+// export const removeOne = id => {
+//   const cart = getCart();
+//   if(id === R.find(id, cart)) {
+//     cart.pop(id);
+//   }
+//   console.log("cart after pop: ", cart);
+//   return cart;
+// }
+
 export const getCategories = state => R.values(state.Products.tags);
 
 export const getCartProductsWithCount = state => {
@@ -42,19 +63,10 @@ export const getCartProductsWithCount = state => {
     R.length,
     R.filter(cartId => R.equals(id, cartId))
   )(state.Cart);
-  const productWithCount = product => R.assoc('count', productCount(product.id), product);
+  const productWithCount = product => R.assoc('quantity', productCount(product.id), product);
   const products = R.compose (
     R.map(productWithCount),
     R.map(id => getProductById(state, id))
   )(uniqueIds);
-  console.log("get with count: ", products);
   return products;
 };
-
-
-// const productTag = tag => R.compose(
-//   getProductsByTag = tag => R.compose(
-//     R.filter(tags => R.equals(tag, tags))
-//   )
-//   R.filter(products.tags => R.equals(tag, getProductsByTag(tag)))
-// )
