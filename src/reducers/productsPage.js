@@ -16,8 +16,6 @@ export default ( state = INITIAL_STATE, { type, payload }) => {
         ids: R.pluck('id', payload),
       });
     case SEARCH_PRODUCT_TAG:
-      console.log("search: ", payload);
-      console.log("type of search: ", typeof payload);
       return R.merge(state, {
         search: payload,
       });

@@ -11,8 +11,6 @@ import { getProducts } from 'selectors';
 class ProductItem extends Component {
   componentDidMount() {
     this.props.fetchProducts();
-    // console.log('params id: ', this.props.match.params.id);
-    // console.log('products in item: ', this.props.products);
   }
   render() {
     const {
