@@ -11,7 +11,8 @@ import {
   FETCH_CATEGORIES_SUCCESS,
   FETCH_CATEGORIES_FAILURE,
   REMOVE_PRODUCT_FROM_CART,
-  REMOVE_ONE_ITEM_FROM_CART
+  REMOVE_ONE_ITEM_FROM_CART,
+  SUBMIT_ORDER_TO_SERVER,
 } from 'actionTypes';
 import {
   fetchProducts as fetchProductsApi,
@@ -65,7 +66,7 @@ export const addProductToCart = id => dispatch => {
     payload: id,
   });
   console.log("actions add to cart:", id);
-}
+};
 
 export const removeOneItemFromCart = id => dispatch => {
   dispatch({
@@ -73,7 +74,7 @@ export const removeOneItemFromCart = id => dispatch => {
     payload: id,
   });
   console.log("actions remove cart:", id);
-}
+};
 
 export const addOrderToCart = ( id, product) => {
   return {
@@ -113,4 +114,12 @@ export const removeProductFromCart = id => async dispatch => {
     type: REMOVE_PRODUCT_FROM_CART,
     payload: id,
   });
+};
+
+export const submitOrderToServer = products => dispatch => {
+  dispatch({
+    type: SUBMIT_ORDER_TO_SERVER,
+    payload: products,
+  });
+  console.log("actions add to cart:", products);
 };

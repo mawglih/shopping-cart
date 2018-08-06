@@ -47,6 +47,7 @@ export const getCartProductsWithCount = state => {
     R.map(productWithCount),
     R.map(id => getProductById(state, id))
   )(uniqueIds);
+  console.log("get with count: ", products);
   return products;
 };
 

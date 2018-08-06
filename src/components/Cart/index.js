@@ -10,15 +10,17 @@ import {
 import {
   removeProductFromCart,
   addProductToCart,
-  removeOneItemFromCart
+  removeOneItemFromCart,
+  submitOrderToServer,
 } from 'actions';
 
 const Cart = ({
   products,
   totalPrice,
   removeProductFromCart,
-  addProductToCart,
-  removeOneItemFromCart
+  addOneItemToCart,
+  removeOneItemFromCart,
+  submitOrderToServer,
 }) => {
   const isCartEmpty = R.isEmpty(products)
   console.log("in cart: ", products);
@@ -56,7 +58,7 @@ const Cart = ({
                   <div>
                     <button
                       className="buttonSmall btnPlus"
-                      onClick={() => addProductToCart(el.id)}
+                      onClick={() => addOneItemToCart(el.id)}
                     >
                       +
                     </button>
@@ -76,7 +78,15 @@ const Cart = ({
               );
             })}
           </div>
-          </div>
+          {!isCartEmpty && <div className="submitOrder">
+            <button
+              className="button submitBtn"
+              onClick={() => submitOrderToServer(products)}
+            >
+              Submit Order
+            </button>
+          </div>}
+        </div>
     </Fragment>
   );
 }
@@ -91,6 +101,7 @@ const mapDispatchToProps = {
   removeProductFromCart,
   addProductToCart,
   removeOneItemFromCart,
+  submitOrderToServer,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

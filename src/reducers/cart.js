@@ -2,6 +2,7 @@ import {
   ADD_PRODUCT_TO_CART,
   REMOVE_PRODUCT_FROM_CART,
   REMOVE_ONE_ITEM_FROM_CART,
+  SUBMIT_ORDER_TO_SERVER,
 } from 'actionTypes';
 import * as R from 'ramda';
 
@@ -15,6 +16,8 @@ export default (state = INITIAL_STATE, {type, payload}) => {
       return R.without(R.of(payload), state);
     case REMOVE_PRODUCT_FROM_CART:
       return R.without(R.of(payload), state);
+    case SUBMIT_ORDER_TO_SERVER:
+      return (payload,state);
     default:
       return state;
   }
