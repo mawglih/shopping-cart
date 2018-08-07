@@ -7,7 +7,6 @@ import {
   PRODUCTS as PRODUCTS_URL,
   PRODUCT_ITEM as PRODUCT_ITEM_URL,
   CART as CART_URL,
-  CATEGORY as CATEGORY_URL
 } from './constants';
 
 export default () => (
@@ -26,11 +25,6 @@ export default () => (
       exact
       path={CART_URL}
       component={Cart}
-    />
-    <Route
-      exact
-      path={CATEGORY_URL}
-      component={Products}
     />
   </Switch>
 );

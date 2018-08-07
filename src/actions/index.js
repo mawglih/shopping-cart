@@ -3,10 +3,6 @@ import {
   FETCH_PRODUCTS_SUCCESS,
   FETCH_PRODUCTS_FAILURE,
   ADD_PRODUCT_TO_CART,
-  SEARCH_PRODUCT_TAG,
-  FETCH_CATEGORIES_START,
-  FETCH_CATEGORIES_SUCCESS,
-  FETCH_CATEGORIES_FAILURE,
   REMOVE_PRODUCT_FROM_CART,
   REMOVE_ONE_ITEM_FROM_CART,
   SUBMIT_ORDER_TO_SERVER,
@@ -16,7 +12,6 @@ import {
 } from 'actionTypes';
 import {
   fetchProducts as fetchProductsApi,
-  fetchCategories as fetchCategoriesApi,
   sendProductToServer as sendProductToServerApi,
 } from 'api';
 
@@ -42,30 +37,6 @@ export const addProductToCart = id => dispatch => {
     type: ADD_PRODUCT_TO_CART,
     payload: id,
   });
-};
-
-export const searchProductTag = (e) => dispatch => {
-  dispatch({
-    type: SEARCH_PRODUCT_TAG,
-    payload: e.target.name,
-  });
-};
-
-export const fetchCategories = () => async dispatch => {
-  try {
-    dispatch({ type: FETCH_CATEGORIES_START});
-    const categories = await fetchCategoriesApi();
-    dispatch({
-      type: FETCH_CATEGORIES_SUCCESS,
-      payload: categories,
-    });
-  } catch(err) {
-    dispatch({
-      type: FETCH_CATEGORIES_FAILURE,
-      payload: err,
-      error: true,
-    });
-  }
 };
 
 export const removeProductFromCart = id => async dispatch => {

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { 
   fetchProducts,
-  fetchCategories,
   addProductToCart,
 } from 'actions';
 import ProductListItem from '../Product-List-Item';
@@ -12,7 +11,6 @@ import { getProducts } from 'selectors';
 class Products extends Component {
   componentDidMount() {
     this.props.fetchProducts()
-    this.props.fetchCategories()
   }
   render() {
     const {
@@ -50,7 +48,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     fetchProducts,
-    fetchCategories,
     addProductToCart,
 };
 

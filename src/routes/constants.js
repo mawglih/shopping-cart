@@ -7,5 +7,4 @@ export default {
   PRODUCTS,
   PRODUCT_ITEM,
   CART,
-  CATEGORY,
 };

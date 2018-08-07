@@ -4,7 +4,6 @@ import Layout from 'components/Layout';
 import { 
   fetchProducts,
   addProductToCart,
-  searchProductTag,
  } from 'actions';
 import { getProducts } from 'selectors';
 
@@ -17,7 +16,6 @@ class ProductItem extends Component {
       match,
       products,
       addProductToCart,
-      searchProductTag,
     } = this.props;
 
     const product = products.find(el => {
@@ -41,7 +39,7 @@ class ProductItem extends Component {
                   <div className="tags">
                     {product.tags.map((el, i) => {
                       
-                      return <button onClick={searchProductTag} name={el} key={i}>{el}</button>
+                      return <button  name={el} key={i}>{el}</button>
                     })}
                   </div>
                   
@@ -96,7 +94,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchProducts,
   addProductToCart,
-  searchProductTag,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductItem);
