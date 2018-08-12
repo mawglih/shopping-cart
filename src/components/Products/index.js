@@ -4,7 +4,7 @@ import {
   fetchProducts,
   addProductToCart,
 } from 'actions';
-import ProductListItem from '../Product-List-Item';
+import ProductListItem from 'components/Product-List-Item';
 import Layout from 'components/Layout';
 import { getProducts } from 'selectors';
 

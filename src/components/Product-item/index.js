@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Layout from 'components/Layout';
+import { Link } from 'react-router-dom';
 import { 
-  fetchProducts,
+  fetchProductById,
   addProductToCart,
  } from 'actions';
-import { getProducts } from 'selectors';
+import { getProductById } from 'selectors';
 
 class ProductItem extends Component {
   componentDidMount() {
-    this.props.fetchProducts();
+    this.props.fetchProductById(this.props.match.params.id);
+    console.log("product match", this.props.match);
   }
   render() {
     const {
-      match,
-      products,
+      product,
       addProductToCart,
     } = this.props;
 
-    const product = products.find(el => {
-      return el.id === match.params.id;
-    });
+    // const product = products.find(el => {
+    //   return el.id === match.params.id;
+    // });
     
     return(
       <div>
@@ -37,12 +38,18 @@ class ProductItem extends Component {
                 <div>
                   <h3>Tags</h3>
                   <div className="tags">
-                    {product.tags.map((el, i) => {
-                      
-                      return <button  name={el} key={i}>{el}</button>
+                    {product.tags.map((tag, i) => {
+                      console.log("tag is: ", tag);
+                      console.log("tag is typeof: ", typeof(tag));
+                      return <Link to={`/tag/${tag}`} key={i}>
+                              <button 
+                                name={tag}
+                              >
+                                {tag}
+                              </button>
+                            </Link>
                     })}
                   </div>
-                  
                 </div>
               </div>
               
@@ -87,12 +94,12 @@ class ProductItem extends Component {
 
 const mapStateToProps = (state) => {
   return{
-    products: getProducts(state),
+    product: getProductById(state, state.ProductPage.id),
 };
 };
 
 const mapDispatchToProps = {
-  fetchProducts,
+  fetchProductById,
   addProductToCart,
 };
 

@@ -9,10 +9,19 @@ import {
   CART_EMPTY,
   ORDER_SUBMITED,
   NEW_ORDER,
+  TAG_SELECTED,
+  FETCH_PRODUCT_BY_ID_START,
+  FETCH_PRODUCT_BY_ID_SUCCESS,
+  FETCH_PRODUCT_BY_ID_FAILURE,
+  FETCH_PRODUCT_BY_TAG_START,
+  FETCH_PRODUCT_BY_TAG_SUCCESS,
+  FETCH_PRODUCT_BY_TAG_FAILURE,
 } from 'actionTypes';
 import {
   fetchProducts as fetchProductsApi,
   sendProductToServer as sendProductToServerApi,
+  fetchProductById as fetchProductByIdApi,
+  fetchProductByTag as fetchProductByTagApi,
 } from 'api';
 
 export const fetchProducts = () => async dispatch => {
@@ -31,6 +40,40 @@ export const fetchProducts = () => async dispatch => {
     });
   }
 };
+
+export const fetchProductById = id => async dispatch => {
+  dispatch({type: FETCH_PRODUCT_BY_ID_START});
+  try{
+    const product = await fetchProductByIdApi(id);
+    dispatch({
+      type: FETCH_PRODUCT_BY_ID_SUCCESS,
+      payload: product,
+    });
+  } catch(err) {
+    dispatch({
+      type: FETCH_PRODUCT_BY_ID_FAILURE,
+      payload: err,
+      error: true,
+    });
+  };
+}
+
+export const fetchProductByTag = id => async dispatch => {
+  dispatch({type: FETCH_PRODUCT_BY_TAG_START});
+  try{
+    const product = await fetchProductByTagApi(id);
+    dispatch({
+      type: FETCH_PRODUCT_BY_TAG_SUCCESS,
+      payload: product,
+    });
+  } catch(err) {
+    dispatch({
+      type: FETCH_PRODUCT_BY_TAG_FAILURE,
+      payload: err,
+      error: true,
+    });
+  };
+}
 
 export const addProductToCart = id => dispatch => {
   dispatch({
@@ -84,5 +127,12 @@ export const orderSubmited = submitted => dispatch => {
 export const startNewOrder = () => dispatch => {
   dispatch({
     type: NEW_ORDER,
+  });
+};
+
+export const onTagSelection = val => dispatch => {
+  dispatch({
+    type: TAG_SELECTED,
+    payload: val,
   });
 };

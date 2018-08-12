@@ -5,7 +5,6 @@ import {
 
 const INITIAL_STATE = {
   ids: [],
-  search: '',
 }
 
 export default ( state = INITIAL_STATE, { type, payload }) => {
@@ -14,6 +13,13 @@ export default ( state = INITIAL_STATE, { type, payload }) => {
       return R.merge(state, {
         ids: R.pluck('id', payload),
       });
+    // case TAG_SELECTED:
+    //   const byTag = R.compose(
+    //     R.contains(payload),
+    //     console.log("payload in reducer", payload),
+    //     R.prop('tags')
+    //   );
+    //   return R.filter(byTag, [{id: 1, tags: [payload]}]);
     default:
       return state;
   }

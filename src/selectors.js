@@ -1,9 +1,18 @@
 import * as R from 'ramda';
 
-export const getProductById = (state, id) => R.prop(id, state.Products);
+export const getProductById = (state, id) => 
+// console.log("getpropduct product", state);
+R.prop(id, state.Products);
 
 export const getProducts = state => {
   const products = R.map(id => getProductById(state, id), state.ProductsPage.ids);
+  console.log("getpropducts products", products);
+  return products;
+}
+
+export const getTaggedProducts = state => {
+  const products = R.map(id => getProductById(state, id), state.Tagged.ids);
+  console.log("gettaggedproducts: ", products);
   return products;
 }
 
