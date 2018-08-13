@@ -32,19 +32,6 @@ export const getTotalCartPrice = state => {
 
 export const getOrderStatus = state => state.Order.submitted;
 
-export const getProductsByTag = state => {
-  const applySearch = item => R.contains(
-    state.ProductsPage.search,
-    R.prop('name', item.tags)
-  )
-  const products = R.compose(
-    R.filter(applySearch),
-    R.map(id => getProductById(state, id))
-  )(state.ProductsPage.ids)
-  console.log("search products names: ", products);
-  return products;
-}
-
  export const getProductsToCheckout = state => {
   const products = getCartProductsWithCount(state);
   const items = R.map(rec => R.pick(
