@@ -10,8 +10,9 @@ export const getProducts = state => {
   return products;
 }
 
+
 export const getTaggedProducts = state => {
-  const products = R.map(id => getProductById(state, id), state.Tagged.ids);
+  const products = Object.values(state.Tagged);
   console.log("gettaggedproducts: ", products);
   return products;
 }

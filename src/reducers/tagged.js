@@ -9,6 +9,7 @@ export default (state = INITIAL_STATE, {type, payload}) => {
   switch (type) {
     case FETCH_PRODUCT_BY_TAG_SUCCESS:
       const newValues = R.indexBy(R.prop('id'), payload);
+      console.log("tagged reducer ", R.merge(state, newValues));
       return R.merge(state, newValues);
     default:
       return state;
